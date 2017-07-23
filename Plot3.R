@@ -3,6 +3,8 @@
 #    Which have seen increases in emissions from 1999–2008? Use the ggplot2 plotting system to make
 #    a plot answer this question.
 
+require(plyr)
+require(ggplot2)
 NEI <- readRDS("./summarySCC_PM25.rds")
 
 # Get Baltimore City, only the year, type and Emissions

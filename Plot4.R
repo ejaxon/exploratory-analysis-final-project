@@ -4,11 +4,17 @@
 NEI <- readRDS("./summarySCC_PM25.rds")
 SCC <- readRDS("./Source_Classification_Code.rds")
 
-scc.coalcomb<- subset(SCC, grepl(".*[Cc]oal.*", EI.Sector))
-scc.coalcomb$SCC <- factor(scc.coalcomb$SCC) # Recompute factor levels
-scc.coalcomb$EI.Sector <- factor(scc.coalcomb$EI.Sector) # Recompute factor levels
+# Generate a vector with only SCC codes for coal combustion-related sources
+scc.cc<- factor(subset(SCC, grepl("^Fuel Comb.*[Cc]oal.*", EI.Sector))$SCC)
+
+# Get the subset of the NEI data with those SCC codes
+nei.cc <- subset(NEI, SCC %in% scc.cc)
+
+# Sum up over sources
+total <- tapply(nei.cc$Emissions, nei.cc$year, sum)/1000 # Scale to Kilotons
 
 png(filename="./Plot4.png")
+barplot(total, main="Total U.S. Coal Combustion-Related Emissions (Kilotons)", xlab="Year", ylab="Coal Combustion-Related Emissions (Kilotons)", ylim=c(0,600))
 
 dev.off()
 
