@@ -8,7 +8,7 @@ require(ggplot2)
 NEI <- readRDS("./summarySCC_PM25.rds")
 
 # Get Baltimore City, only the year, type and Emissions
-bc <- subset(NEI, fips==24510)[4:6]
+bc <- subset(NEI, fips=="24510")[4:6]
 
 # Reduce to get just the total emissions, scaled to Kilotons
 s <- ddply(bc, .(year, type), summarize, total=sum(Emissions)/1000)

@@ -7,6 +7,3 @@ total <- tapply(NEI$Emissions, NEI$year, sum)/1000 # Scale to Kilotons
 png(filename="./Plot1.png")
 barplot(total, main="Total U.S. PM2.5 Emissions (Kilotons)", xlab="Year", ylab="Total PM2.5 Emissions (Kilotons)", ylim=c(0,8000))
 dev.off()
-
-
-
