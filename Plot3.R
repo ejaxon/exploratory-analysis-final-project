@@ -5,3 +5,8 @@
 
 NEI <- readRDS("./summarySCC_PM25.rds")
 SCC <- readRDS("./Source_Classification_Code.rds")
+
+
+png(filename="./Plot3.png")
+
+dev.off()
