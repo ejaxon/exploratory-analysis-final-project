@@ -4,9 +4,17 @@
 #    a plot answer this question.
 
 NEI <- readRDS("./summarySCC_PM25.rds")
-SCC <- readRDS("./Source_Classification_Code.rds")
 
+# Get Baltimore City, only the year, type and Emissions
+bc <- subset(NEI, fips==24510)[4:6]
 
-png(filename="./Plot3.png")
+# Reduce to get just the total emissions, scaled to Kilotons
+s <- ddply(bc, .(year, type), summarize, total=sum(Emissions)/1000)
 
-dev.off()
+p <- ggplot(data=s, mapping=aes(year,total)) + geom_point(shape=20,size=4) + ylim(c(0,3))
+p <- p+facet_grid(. ~ type)
+p <- p + geom_smooth(method="lm", se=FALSE)
+p <- p + xlab("Year") + ylab("Total PM2.5 Emissions (Kilotons)")
+p <- p + ggtitle("Total PM2.5 Emissions By Source Type (Kilotons)")
+ggsave("./Plot3.png", device="png")
+
